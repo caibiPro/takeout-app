@@ -4,15 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mingqing.common.utils.Result;
 import com.mingqing.entity.Employee;
 import com.mingqing.service.EmployeeService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -50,6 +50,34 @@ public class EmployeeController {
 		request.getSession().removeAttribute("employee");
 		log.info("退出登陆成功");
 		return Result.success("退出成功");
+	}
+
+	@PostMapping
+	public Result<String> save(HttpServletRequest request, @RequestBody Employee employee) {
+		log.info("新增的员工信息：{}", employee);
+
+		employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+		Long empId = (Long) request.getSession().getAttribute("employee");
+
+		employee.setCreateUser(empId);
+		employee.setUpdateUser(empId);
+
+//		employee.setCreateTime(LocalDateTime.now());
+//		employee.setUpdateTime(LocalDateTime.now());
+
+		boolean save = employeeService.save(employee);
+		log.info("添加{}", save ? "成功" : "失败");
+		return Result.success("添加员工成功");
+	}
+
+	@GetMapping("/all")
+	public Result<?> all() {
+		List<Employee> list = employeeService.list();
+		list.forEach((one) ->{
+			log.info("{}", one);
+		});
+
+		return Result.success(list);
 	}
 
 }

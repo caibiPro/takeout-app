@@ -24,5 +24,9 @@ unfiltered:
   paths:
     - /employee/login
     - /employee/logout
+    - /employee/layout
     - /backend/**
     - /front/**
+    - /swagger-ui.html
+    - /user/code
+    - /user/login
