@@ -18,3 +18,11 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: assign_id
+
+# 自定义配置
+unfiltered:
+  paths:
+    - /employee/login
+    - /employee/logout
+    - /backend/**
+    - /front/**
