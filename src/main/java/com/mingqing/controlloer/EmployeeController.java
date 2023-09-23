@@ -1,17 +1,18 @@
 package com.mingqing.controlloer;
 
+import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mingqing.common.utils.Result;
 import com.mingqing.entity.Employee;
 import com.mingqing.service.EmployeeService;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -70,10 +71,23 @@ public class EmployeeController {
 		return Result.success("添加员工成功");
 	}
 
+	@GetMapping("page")
+	public Result<?> page(int page, int pageSize, String name) {
+		log.info("page={},pageSize={},name={}", page, pageSize, name);
+
+		Page<Employee> pageInfo = new Page<>(page, pageSize);
+		LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.like(!StringUtils.isEmpty(name), Employee::getName, name);
+		queryWrapper.orderByDesc(Employee::getUpdateTime);
+
+		employeeService.page(pageInfo, queryWrapper);
+		return Result.success(pageInfo);
+	}
+
 	@GetMapping("/all")
 	public Result<?> all() {
 		List<Employee> list = employeeService.list();
-		list.forEach((one) ->{
+		list.forEach((one) -> {
 			log.info("{}", one);
 		});
 
