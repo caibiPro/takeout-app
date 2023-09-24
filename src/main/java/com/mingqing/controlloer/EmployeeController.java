@@ -84,6 +84,21 @@ public class EmployeeController {
 		return Result.success(pageInfo);
 	}
 
+	@PutMapping
+	public Result<?> update(HttpServletRequest request, @RequestBody Employee employee) {
+		log.info("修改的员工信息:{}", employee);
+
+		Long loginUserID = (Long) request.getSession().getAttribute("employee");
+
+		employee.setUpdateUser(loginUserID);
+		boolean update = employeeService.updateById(employee);
+
+		if (!update) {
+			return Result.error("修改失败");
+		}
+		return Result.success("修改成功");
+	}
+
 	@GetMapping("/all")
 	public Result<?> all() {
 		List<Employee> list = employeeService.list();
