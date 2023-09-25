@@ -43,6 +43,7 @@ public class EmployeeController {
 
 		request.getSession().setAttribute("employee", loginEmployee.getId());
 		log.info("登陆成功");
+
 		return Result.success(loginEmployee);
 	}
 
@@ -59,9 +60,6 @@ public class EmployeeController {
 
 		employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
 		Long empId = (Long) request.getSession().getAttribute("employee");
-
-		employee.setCreateUser(empId);
-		employee.setUpdateUser(empId);
 
 		boolean save = employeeService.save(employee);
 		log.info("添加{}", save ? "成功" : "失败");
@@ -84,12 +82,7 @@ public class EmployeeController {
 	@PutMapping
 	public Result<?> update(HttpServletRequest request, @RequestBody Employee employee) {
 		log.info("修改的员工信息:{}", employee);
-
-		Long loginUserID = (Long) request.getSession().getAttribute("employee");
-
-		employee.setUpdateUser(loginUserID);
 		boolean update = employeeService.updateById(employee);
-
 		if (!update) {
 			return Result.error("修改失败");
 		}

@@ -1,4 +1,4 @@
-package com.mingqing.common.exceptionhandler;
+package com.mingqing.common.handler;
 
 import com.mingqing.common.utils.Result;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,7 @@
 package com.mingqing.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.mingqing.common.utils.BaseContext;
 import com.mingqing.common.utils.Result;
 import com.mingqing.common.utils.UnfilteredPaths;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +63,9 @@ public class LoginCheckFilter implements Filter {
 
 		//4.判断登录状态，如果已登录，则直接放行
 		if (request.getSession().getAttribute("employee") != null) {
-			log.info("用户 {} 已登录",request.getSession().getAttribute("employee"));
+			Long id = (Long) request.getSession().getAttribute("employee");
+			log.info("用户 {} 已登录", id);
+			BaseContext.setLoginId(id);
 			filterChain.doFilter(request,response);
 			return;
 		}
