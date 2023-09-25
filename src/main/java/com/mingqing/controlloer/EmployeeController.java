@@ -63,9 +63,6 @@ public class EmployeeController {
 		employee.setCreateUser(empId);
 		employee.setUpdateUser(empId);
 
-//		employee.setCreateTime(LocalDateTime.now());
-//		employee.setUpdateTime(LocalDateTime.now());
-
 		boolean save = employeeService.save(employee);
 		log.info("添加{}", save ? "成功" : "失败");
 		return Result.success("添加员工成功");
