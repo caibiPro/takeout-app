@@ -95,6 +95,16 @@ public class EmployeeController {
 		}
 		return Result.success("修改成功");
 	}
+	
+	@GetMapping("/{id}")
+	public Result<?> getById(@PathVariable Long id) {
+		log.info("根据id查询员工信息...");
+		Employee employee = employeeService.getById(id);
+		if (employee != null) {
+			return Result.success(employee);
+		}
+		return Result.error("未查询到该员工信息");
+	}
 
 	@GetMapping("/all")
 	public Result<?> all() {
