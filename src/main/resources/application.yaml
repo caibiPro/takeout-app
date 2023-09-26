@@ -33,4 +33,5 @@ reggie:
       - /user/code
       - /user/login
   dump:
-    base-path: /Users/mingqing/Documents/study/project/reggie_take_out/src/main/resources/dump/dish/
+    dish:
+      base-path: /Users/mingqing/Documents/study/project/reggie_take_out/src/main/resources/dump/dish/
