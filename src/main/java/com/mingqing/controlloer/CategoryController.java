@@ -1,7 +1,6 @@
 package com.mingqing.controlloer;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mingqing.common.utils.Result;
 import com.mingqing.entity.Category;
@@ -33,5 +32,11 @@ public class CategoryController {
 		queryWrapper.orderByAsc(Category::getSort);
 		categoryService.page(pageInfo, queryWrapper);
 		return Result.success(pageInfo);
+	}
+
+	@DeleteMapping
+	public Result<?> delete(Long id) {
+		categoryService.removeById(id);
+		return Result.success("删除成功");
 	}
 }
