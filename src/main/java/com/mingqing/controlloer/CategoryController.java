@@ -39,4 +39,14 @@ public class CategoryController {
 		categoryService.removeById(id);
 		return Result.success("删除成功");
 	}
+
+	@PutMapping
+	public Result<?> update(@RequestBody Category category) {
+		log.info("修改的分类信息未：{}", category);
+		boolean update = categoryService.updateById(category);
+		if (!update) {
+			return Result.error("修改分类信息失败");
+		}
+		return Result.success("修改分类信息成功");
+	}
 }
