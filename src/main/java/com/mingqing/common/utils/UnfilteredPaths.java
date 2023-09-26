@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Component
-@ConfigurationProperties("unfiltered")
+@ConfigurationProperties("reggie.unfiltered")
 public class UnfilteredPaths {
 	private List<String> paths;
 }

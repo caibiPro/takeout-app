@@ -20,13 +20,17 @@ mybatis-plus:
       id-type: assign_id
 
 # 自定义配置
-unfiltered:
-  paths:
-    - /employee/login
-    - /employee/logout
-    - /employee/layout
-    - /backend/**
-    - /front/**
-    - /swagger-ui.html
-    - /user/code
-    - /user/login
+reggie:
+  unfiltered:
+    paths:
+      - /employee/login
+      - /employee/logout
+      - /employee/layout
+      - /backend/**
+      - /front/**
+      - /common/**
+      - /swagger-ui.html
+      - /user/code
+      - /user/login
+  dump:
+    base-path: /Users/mingqing/Documents/study/project/reggie_take_out/src/main/resources/dump/dish/
