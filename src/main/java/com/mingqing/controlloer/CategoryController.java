@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/category")
@@ -48,5 +50,15 @@ public class CategoryController {
 			return Result.error("修改分类信息失败");
 		}
 		return Result.success("修改分类信息成功");
+	}
+
+	@GetMapping("/list")
+	public Result<?> list(Category category) {
+		LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
+		queryWrapper.orderByDesc(Category::getSort).orderByAsc(Category::getUpdateTime);
+		List<Category> list = categoryService.list(queryWrapper);
+
+		return Result.success(list);
 	}
 }
