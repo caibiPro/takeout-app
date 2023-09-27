@@ -45,4 +45,24 @@ public class Dish implements Serializable {
     private Integer isDeleted;
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", categoryId=" + categoryId +
+            ", price=" + price +
+            ", code='" + code + '\'' +
+            ", image='" + image + '\'' +
+            ", description='" + description + '\'' +
+            ", status=" + status +
+            ", sort=" + sort +
+            ", createTime=" + createTime +
+            ", updateTime=" + updateTime +
+            ", createUser=" + createUser +
+            ", updateUser=" + updateUser +
+            ", isDeleted=" + isDeleted +
+            '}';
+    }
 }

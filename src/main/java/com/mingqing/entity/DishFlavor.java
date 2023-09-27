@@ -34,4 +34,19 @@ public class DishFlavor implements Serializable {
     private Integer isDeleted;
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public String toString() {
+        return "DishFlavor{" +
+            "id=" + id +
+            ", dishId=" + dishId +
+            ", name='" + name + '\'' +
+            ", value='" + value + '\'' +
+            ", createTime=" + createTime +
+            ", updateTime=" + updateTime +
+            ", createUser=" + createUser +
+            ", updateUser=" + updateUser +
+            ", isDeleted=" + isDeleted +
+            '}';
+    }
 }
