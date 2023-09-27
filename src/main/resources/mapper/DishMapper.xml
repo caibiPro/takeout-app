@@ -28,4 +28,23 @@
         create_time,update_time,create_user,
         update_user,is_deleted
     </sql>
+
+  <select id="selectWithCategory" resultType="com.mingqing.dto.DishDTO">
+    SELECT
+      d.id, d.`name`, d.category_id,
+      d.price, d.`code`, d.image, c.`name` AS category_name,
+      d.description, d.`status`, d.sort,
+      d.create_time, d.update_time,
+      d.create_user, d.update_user,
+      d.is_deleted
+    FROM
+      dish d
+        LEFT JOIN category c ON d.category_id = c.id
+    <where>
+      <if test="name != null">
+        d.`name` LIKE '%${name}%'
+      </if>
+    </where>
+    ORDER BY update_time DESC
+  </select>
 </mapper>

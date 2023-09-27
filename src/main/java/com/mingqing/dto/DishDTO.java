@@ -11,11 +11,5 @@ public class DishDTO extends Dish {
 
 	private List<DishFlavor> flavors;
 
-	@Override
-	public String toString() {
-		return "DishDTO{" +
-			super.toString() +
-			"flavors=" + flavors +
-			'}';
-	}
+	private String categoryName;
 }

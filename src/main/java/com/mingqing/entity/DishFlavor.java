@@ -1,52 +1,39 @@
 package com.mingqing.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
 
-@TableName(value ="dish_flavor")
+@TableName(value = "dish_flavor")
 @Data
 public class DishFlavor implements Serializable {
-    @TableId("id")
-    private Long id;
 
-    private Long dishId;
+	private static final long serialVersionUID = 1L;
 
-    private String name;
+	@TableId("id")
+	private Long id;
 
-    private String value;
+	private Long dishId;
 
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+	private String name;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+	private String value;
 
-    @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
 
-    @TableLogic
-    private Integer isDeleted;
+	@TableField(fill = FieldFill.INSERT)
+	private Long createUser;
 
-    private static final long serialVersionUID = 1L;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long updateUser;
 
-    @Override
-    public String toString() {
-        return "DishFlavor{" +
-            "id=" + id +
-            ", dishId=" + dishId +
-            ", name='" + name + '\'' +
-            ", value='" + value + '\'' +
-            ", createTime=" + createTime +
-            ", updateTime=" + updateTime +
-            ", createUser=" + createUser +
-            ", updateUser=" + updateUser +
-            ", isDeleted=" + isDeleted +
-            '}';
-    }
+	@TableLogic
+	private Integer isDeleted;
+
 }

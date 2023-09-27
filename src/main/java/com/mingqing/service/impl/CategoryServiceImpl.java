@@ -6,8 +6,8 @@ import com.mingqing.common.exception.CustomRelevanceException;
 import com.mingqing.entity.Category;
 import com.mingqing.entity.Dish;
 import com.mingqing.entity.Setmeal;
-import com.mingqing.service.CategoryService;
 import com.mingqing.mapper.CategoryMapper;
+import com.mingqing.service.CategoryService;
 import com.mingqing.service.DishService;
 import com.mingqing.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 
 @Service
-public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
-    implements CategoryService{
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
+
 	@Autowired
 	private DishService dishService;
 

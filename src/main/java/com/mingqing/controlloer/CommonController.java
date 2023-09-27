@@ -16,18 +16,19 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/common")
 public class CommonController {
+
 	@Value("${reggie.dump.dish.base-path}")
 	private String basePath;
 
 	@PostMapping("/upload")
 	public Result<?> upload(@RequestParam("file") MultipartFile uploadFile) throws IOException {
 		log.info("获取文件：{}", uploadFile.toString());
-		
+
 		File dir = new File(basePath);
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		
+
 		String originalFilename = uploadFile.getOriginalFilename();
 		String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
 		String filename = UUID.randomUUID() + suffix;

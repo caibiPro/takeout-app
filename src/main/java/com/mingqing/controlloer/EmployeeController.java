@@ -9,7 +9,6 @@ import com.mingqing.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
+
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -88,7 +88,7 @@ public class EmployeeController {
 		}
 		return Result.success("修改成功");
 	}
-	
+
 	@GetMapping("/{id}")
 	public Result<?> getById(@PathVariable Long id) {
 		log.info("根据id查询员工信息...");

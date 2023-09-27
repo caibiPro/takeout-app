@@ -1,48 +1,47 @@
 package com.mingqing.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
-import lombok.Data;
 
-
-@TableName(value ="setmeal")
+@TableName(value = "setmeal")
 @Data
 public class Setmeal implements Serializable {
-    @TableId("id")
-    private Long id;
 
-    private Long categoryId;
+	private static final long serialVersionUID = 1L;
 
-    private String name;
+	@TableId("id")
+	private Long id;
 
-    private BigDecimal price;
+	private Long categoryId;
 
-    private Integer status;
+	private String name;
 
-    private String code;
+	private BigDecimal price;
 
-    private String description;
+	private Integer status;
 
-    private String image;
+	private String code;
 
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+	private String description;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+	private String image;
 
-    @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
 
-    @TableLogic
-    private Integer isDeleted;
+	@TableField(fill = FieldFill.INSERT)
+	private Long createUser;
 
-    private static final long serialVersionUID = 1L;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long updateUser;
+
+	@TableLogic
+	private Integer isDeleted;
 }

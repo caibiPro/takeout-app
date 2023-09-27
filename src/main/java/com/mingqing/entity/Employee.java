@@ -1,45 +1,46 @@
 package com.mingqing.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import lombok.Data;
-
-
-@TableName(value ="employee")
+@TableName(value = "employee")
 @Data
 public class Employee implements Serializable {
 
-    @TableId(value = "id")
-    private Long id;
+	private static final long serialVersionUID = 1L;
 
-    private String name;
+	@TableId(value = "id")
+	private Long id;
 
-    private String username;
+	private String name;
 
-    private String password;
+	private String username;
 
-    private String phone;
+	private String password;
 
-    private String sex;
+	private String phone;
 
-    private String idNumber;
+	private String sex;
 
-    private Integer status;
+	private String idNumber;
 
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+	private Integer status;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+	@TableField(fill = FieldFill.INSERT)
+	private Long createUser;
 
-    private static final long serialVersionUID = 1L;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long updateUser;
 }

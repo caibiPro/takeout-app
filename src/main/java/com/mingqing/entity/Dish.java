@@ -1,68 +1,50 @@
 package com.mingqing.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.Data;
 
-@TableName(value ="dish")
+@TableName(value = "dish")
 @Data
 public class Dish implements Serializable {
-    @TableId("id")
-    private Long id;
 
-    private String name;
+	private static final long serialVersionUID = 1L;
 
-    private Long categoryId;
+	@TableId("id")
+	private Long id;
 
-    private BigDecimal price;
+	private String name;
 
-    private String code;
+	private Long categoryId;
 
-    private String image;
+	private BigDecimal price;
 
-    private String description;
+	private String code;
 
-    private Integer status;
+	private String image;
 
-    private Integer sort;
+	private String description;
 
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+	private Integer status;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+	private Integer sort;
 
-    @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
 
-    @TableLogic
-    private Integer isDeleted;
+	@TableField(fill = FieldFill.INSERT)
+	private Long createUser;
 
-    private static final long serialVersionUID = 1L;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long updateUser;
 
-    @Override
-    public String toString() {
-        return "Dish{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", categoryId=" + categoryId +
-            ", price=" + price +
-            ", code='" + code + '\'' +
-            ", image='" + image + '\'' +
-            ", description='" + description + '\'' +
-            ", status=" + status +
-            ", sort=" + sort +
-            ", createTime=" + createTime +
-            ", updateTime=" + updateTime +
-            ", createUser=" + createUser +
-            ", updateUser=" + updateUser +
-            ", isDeleted=" + isDeleted +
-            '}';
-    }
+	@TableLogic
+	private Integer isDeleted;
+
 }

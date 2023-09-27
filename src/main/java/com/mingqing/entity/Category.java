@@ -1,35 +1,38 @@
 package com.mingqing.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
 
-
-@TableName(value ="category")
+@TableName(value = "category")
 @Data
 public class Category implements Serializable {
-    @TableId("id")
-    private Long id;
 
-    private Integer type;
+	private static final long serialVersionUID = 1L;
 
-    private String name;
+	@TableId("id")
+	private Long id;
 
-    private Integer sort;
+	private Integer type;
 
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+	private String name;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+	private Integer sort;
 
-    @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
 
-    private static final long serialVersionUID = 1L;
+	@TableField(fill = FieldFill.INSERT)
+	private Long createUser;
+
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long updateUser;
 }

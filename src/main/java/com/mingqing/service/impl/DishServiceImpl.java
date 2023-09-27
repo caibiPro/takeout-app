@@ -1,12 +1,15 @@
 package com.mingqing.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mingqing.dto.DishDTO;
 import com.mingqing.entity.Dish;
 import com.mingqing.entity.DishFlavor;
+import com.mingqing.mapper.DishMapper;
 import com.mingqing.service.DishFlavorService;
 import com.mingqing.service.DishService;
-import com.mingqing.mapper.DishMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>
-    implements DishService{
+public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements DishService {
 
 	@Autowired
 	private DishFlavorService dishFlavorService;
+
+	@Autowired
+	private DishMapper dishMapper;
 
 	@Override
 	@Transactional
@@ -34,6 +39,12 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>
 		boolean savedDishFlavor = dishFlavorService.saveBatch(flavors);
 
 		return savedDish && savedDishFlavor;
+	}
+
+	@Override
+	public IPage<DishDTO> getDishWithCategory(int page, int pageSize, String name) {
+		Page<DishDTO> pageInfo = new Page<>(page, pageSize);
+		return dishMapper.selectWithCategory(pageInfo, name);
 	}
 }
 

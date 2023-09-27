@@ -1,9 +1,7 @@
 package com.mingqing.service;
 
-import com.mingqing.entity.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.io.Serializable;
+import com.mingqing.entity.Category;
 
 public interface CategoryService extends IService<Category> {
 
