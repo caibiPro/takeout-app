@@ -1,6 +1,7 @@
 package com.mingqing.controlloer;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.mingqing.common.utils.Result;
 import com.mingqing.dto.DishDTO;
 import com.mingqing.service.DishService;
@@ -37,7 +38,17 @@ public class DishController {
 
 	@GetMapping("/{id}")
 	public Result<?> getByIdWithFlavor(@PathVariable Long id) {
-		DishDTO dishesWithFlavor = dishService.getByIdWithFlavor(id);
-		return Result.success(dishesWithFlavor);
+		DishDTO dishWithFlavor = dishService.getByIdWithFlavor(id);
+		return Result.success(dishWithFlavor);
+	}
+
+	@PutMapping
+	public Result<?> update(@RequestBody DishDTO dishDTO) {
+		log.info("接受到的数据为：{}", dishDTO);
+		boolean updated = dishService.updateWithFlavor(dishDTO);
+		if (!updated) {
+			return Result.error("修改菜品失败");
+		}
+		return Result.success("修改菜品成功");
 	}
 }

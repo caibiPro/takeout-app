@@ -1,10 +1,9 @@
 package com.mingqing.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mingqing.common.utils.Result;
 import com.mingqing.dto.DishDTO;
 import com.mingqing.entity.Dish;
 import com.mingqing.entity.DishFlavor;
@@ -50,8 +49,26 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
 	@Override
 	public DishDTO getByIdWithFlavor(Long id) {
-		DishDTO dishDTO = dishMapper.selectByIdWithFlavor(id);
-		return dishDTO;
+		return dishMapper.selectByIdWithFlavor(id);
+	}
+
+	@Override
+	@Transactional
+	public boolean updateWithFlavor(DishDTO dishDTO) {
+		Long dishId = dishDTO.getId();
+		List<DishFlavor> flavors = dishDTO.getFlavors();
+		updateById(dishDTO);
+
+		LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(DishFlavor::getDishId, dishDTO.getId());
+		dishFlavorService.remove(queryWrapper);
+
+		flavors = flavors.stream().peek(item -> {
+			item.setDishId(dishId);
+			item.setId(null);
+		}).collect(Collectors.toList());
+		dishFlavorService.saveBatch(flavors);
+		return true;
 	}
 }
 

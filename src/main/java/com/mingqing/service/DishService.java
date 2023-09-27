@@ -13,4 +13,7 @@ public interface DishService extends IService<Dish> {
 	IPage<DishDTO> getDishWithCategory(int page, int pageSize, String name);
 
 	DishDTO getByIdWithFlavor(Long id);
+
+	boolean updateWithFlavor(DishDTO dishDTO);
 }
+
