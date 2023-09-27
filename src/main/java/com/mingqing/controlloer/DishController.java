@@ -34,4 +34,10 @@ public class DishController {
 		log.info("DishDTO: {}", records);
 		return Result.success(dishWithCategory);
 	}
+
+	@GetMapping("/{id}")
+	public Result<?> getByIdWithFlavor(@PathVariable Long id) {
+		DishDTO dishesWithFlavor = dishService.getByIdWithFlavor(id);
+		return Result.success(dishesWithFlavor);
+	}
 }

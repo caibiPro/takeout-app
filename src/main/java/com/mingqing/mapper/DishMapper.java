@@ -12,6 +12,8 @@ import java.util.List;
 public interface DishMapper extends BaseMapper<Dish> {
 
 	IPage<DishDTO> selectWithCategory(IPage<?> page, @Param("name") String name);
+
+	DishDTO selectByIdWithFlavor(Long id);
 }
 
 

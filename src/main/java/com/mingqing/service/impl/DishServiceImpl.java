@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mingqing.common.utils.Result;
 import com.mingqing.dto.DishDTO;
 import com.mingqing.entity.Dish;
 import com.mingqing.entity.DishFlavor;
@@ -45,6 +46,12 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	public IPage<DishDTO> getDishWithCategory(int page, int pageSize, String name) {
 		Page<DishDTO> pageInfo = new Page<>(page, pageSize);
 		return dishMapper.selectWithCategory(pageInfo, name);
+	}
+
+	@Override
+	public DishDTO getByIdWithFlavor(Long id) {
+		DishDTO dishDTO = dishMapper.selectByIdWithFlavor(id);
+		return dishDTO;
 	}
 }
 
