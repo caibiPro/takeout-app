@@ -57,8 +57,18 @@ public class DishController {
 		log.info("ids = {}", ids);
 		boolean reversed = dishService.reverseStatus(status, ids);
 		if (!reversed) {
-			return Result.error("更高状态失败");
+			return Result.error("更改状态失败");
 		}
 		return Result.success("更改状态成功");
+	}
+
+	@DeleteMapping
+	public Result<?> removeDishes(@RequestParam List<Long> ids) {
+		log.info("ids = {}", ids);
+		boolean removed = dishService.removeDishes(ids);
+		if (!removed) {
+			return Result.error("删除菜品失败");
+		}
+		return Result.success("删除菜品成功");
 	}
 }

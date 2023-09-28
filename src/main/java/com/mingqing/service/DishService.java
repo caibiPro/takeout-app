@@ -19,5 +19,7 @@ public interface DishService extends IService<Dish> {
 	boolean updateWithFlavor(DishDTO dishDTO);
 
 	boolean reverseStatus(int status, List<Long> ids);
+
+	boolean removeDishes(List<Long> ids);
 }
 

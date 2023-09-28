@@ -84,6 +84,19 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		return updateBatchById(dishList);
 	}
 
+	@Override
+	@Transactional
+	public boolean removeDishes(List<Long> ids) {
+		// 在dish表中批量删除
+		boolean dishRemoved = removeByIds(ids);
+
+		// 在dish_flavor表中批量删除
+		LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.in(DishFlavor::getDishId, ids);
+		boolean flavorRemoved = dishFlavorService.remove(queryWrapper);
+
+		return dishRemoved && flavorRemoved;
+	}
 }
 
 
