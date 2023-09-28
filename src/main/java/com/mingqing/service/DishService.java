@@ -6,6 +6,8 @@ import com.mingqing.common.utils.Result;
 import com.mingqing.dto.DishDTO;
 import com.mingqing.entity.Dish;
 
+import java.util.List;
+
 public interface DishService extends IService<Dish> {
 
 	boolean saveWithFlavor(DishDTO dishDTO);
@@ -15,5 +17,7 @@ public interface DishService extends IService<Dish> {
 	DishDTO getByIdWithFlavor(Long id);
 
 	boolean updateWithFlavor(DishDTO dishDTO);
+
+	boolean reverseStatus(int status, List<Long> ids);
 }
 

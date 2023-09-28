@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,6 +71,19 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		dishFlavorService.saveBatch(flavors);
 		return true;
 	}
+
+	@Override
+	public boolean reverseStatus(int status, List<Long> ids) {
+		List<Dish> dishList = new ArrayList<>();
+		for (Long id : ids) {
+			Dish dish = new Dish();
+			dish.setId(id);
+			dish.setStatus(status);
+			dishList.add(dish);
+		}
+		return updateBatchById(dishList);
+	}
+
 }
 
 

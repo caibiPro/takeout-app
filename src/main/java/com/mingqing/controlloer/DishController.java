@@ -1,7 +1,6 @@
 package com.mingqing.controlloer;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.mingqing.common.utils.Result;
 import com.mingqing.dto.DishDTO;
 import com.mingqing.service.DishService;
@@ -50,5 +49,16 @@ public class DishController {
 			return Result.error("修改菜品失败");
 		}
 		return Result.success("修改菜品成功");
+	}
+
+	@PostMapping("/status/{status}")
+	public Result<?> alterStatus(@PathVariable int status, @RequestParam("ids") List<Long> ids) {
+		log.info("status = {}", status);
+		log.info("ids = {}", ids);
+		boolean reversed = dishService.reverseStatus(status, ids);
+		if (!reversed) {
+			return Result.error("更高状态失败");
+		}
+		return Result.success("更改状态成功");
 	}
 }
