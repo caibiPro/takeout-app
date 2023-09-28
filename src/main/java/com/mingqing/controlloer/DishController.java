@@ -1,8 +1,10 @@
 package com.mingqing.controlloer;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mingqing.common.utils.Result;
 import com.mingqing.dto.DishDTO;
+import com.mingqing.entity.Dish;
 import com.mingqing.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +72,17 @@ public class DishController {
 			return Result.error("删除菜品失败");
 		}
 		return Result.success("删除菜品成功");
+	}
+
+	@GetMapping("/list")
+	public Result<?> list(Dish dish) {
+		log.info("dish = {}", dish);
+		LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+		queryWrapper.eq(Dish::getStatus, 1);
+		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+
+		List<Dish> list = dishService.list(queryWrapper);
+		return Result.success(list);
 	}
 }
