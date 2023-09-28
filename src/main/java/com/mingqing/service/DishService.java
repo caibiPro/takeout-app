@@ -1,14 +1,13 @@
 package com.mingqing.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.mingqing.common.utils.Result;
+import com.mingqing.injector.base.CustomBaseService;
 import com.mingqing.dto.DishDTO;
 import com.mingqing.entity.Dish;
 
 import java.util.List;
 
-public interface DishService extends IService<Dish> {
+public interface DishService extends CustomBaseService<Dish> {
 
 	boolean saveWithFlavor(DishDTO dishDTO);
 

@@ -3,7 +3,7 @@ package com.mingqing.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mingqing.injector.base.CustomBaseServiceImpl;
 import com.mingqing.dto.DishDTO;
 import com.mingqing.entity.Dish;
 import com.mingqing.entity.DishFlavor;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements DishService {
+public class DishServiceImpl extends CustomBaseServiceImpl<DishMapper, Dish> implements DishService {
 
 	@Autowired
 	private DishFlavorService dishFlavorService;
@@ -88,14 +88,19 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	@Transactional
 	public boolean removeDishes(List<Long> ids) {
 		// 在dish表中批量删除
-		boolean dishRemoved = removeByIds(ids);
+//		boolean dishRemoved = removeByIds(ids);
+		for (Long id : ids) {
+			Dish dish = new Dish();
+			dish.setId(id);
+			deleteByIdWithFill(dish);
+		}
 
 		// 在dish_flavor表中批量删除
 		LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
 		queryWrapper.in(DishFlavor::getDishId, ids);
 		boolean flavorRemoved = dishFlavorService.remove(queryWrapper);
 
-		return dishRemoved && flavorRemoved;
+		return true;
 	}
 }
 
