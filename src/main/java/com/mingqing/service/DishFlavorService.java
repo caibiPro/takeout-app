@@ -1,8 +1,8 @@
 package com.mingqing.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.mingqing.entity.DishFlavor;
+import com.mingqing.injector.base.CustomBaseService;
 
-public interface DishFlavorService extends IService<DishFlavor> {
+public interface DishFlavorService extends CustomBaseService<DishFlavor> {
 
 }

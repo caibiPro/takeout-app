@@ -1,6 +1,8 @@
 package com.mingqing.injector.base;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,5 +21,10 @@ public interface CustomBaseMapper<T> extends BaseMapper<T> {
 	 * @return
 	 */
 	int mysqlInsertAllBatch(@Param("list") List<T> batchList);
+
+	/**
+	 * 无论是否存在逻辑删除位都直接删除
+	 */
+	int realDelete(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
 }

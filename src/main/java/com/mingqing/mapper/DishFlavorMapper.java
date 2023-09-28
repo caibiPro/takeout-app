@@ -1,9 +1,9 @@
 package com.mingqing.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mingqing.entity.DishFlavor;
+import com.mingqing.injector.base.CustomBaseMapper;
 
-public interface DishFlavorMapper extends BaseMapper<DishFlavor> {
+public interface DishFlavorMapper extends CustomBaseMapper<DishFlavor> {
 
 }
 
