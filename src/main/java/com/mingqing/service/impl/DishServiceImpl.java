@@ -1,6 +1,8 @@
 package com.mingqing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mingqing.injector.base.CustomBaseServiceImpl;
@@ -88,19 +90,15 @@ public class DishServiceImpl extends CustomBaseServiceImpl<DishMapper, Dish> imp
 	@Transactional
 	public boolean removeDishes(List<Long> ids) {
 		// 在dish表中批量删除
-//		boolean dishRemoved = removeByIds(ids);
-		for (Long id : ids) {
-			Dish dish = new Dish();
-			dish.setId(id);
-			deleteByIdWithFill(dish);
-		}
+		LambdaUpdateWrapper<Dish> updateWrapper = new LambdaUpdateWrapper<>();
+		updateWrapper.in(Dish::getId).set(Dish::getIsDeleted, 1);
+		boolean dishUpdated = this.update(new Dish(), updateWrapper);
 
 		// 在dish_flavor表中批量删除
-		LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.in(DishFlavor::getDishId, ids);
-		boolean flavorRemoved = dishFlavorService.remove(queryWrapper);
-
-		return true;
+		LambdaUpdateWrapper<DishFlavor> updateWrapperFlavor = new LambdaUpdateWrapper<>();
+		updateWrapperFlavor.in(DishFlavor::getDishId, ids).set(DishFlavor::getIsDeleted, 1);
+		boolean flavorUpdated = dishFlavorService.update(new DishFlavor(), updateWrapperFlavor);
+		return dishUpdated && flavorUpdated;
 	}
 }
 
