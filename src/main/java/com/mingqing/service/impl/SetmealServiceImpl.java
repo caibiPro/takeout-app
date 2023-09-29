@@ -1,7 +1,10 @@
 package com.mingqing.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mingqing.common.exception.CustomException;
 import com.mingqing.dto.SetmealDTO;
 import com.mingqing.entity.Setmeal;
 import com.mingqing.entity.SetmealDish;
@@ -58,6 +61,30 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 			setmeals.add(setmeal);
 		}
 		return updateBatchById(setmeals);
+	}
+
+	@Override
+	@Transactional
+	public boolean removeSetmeal(List<Long> ids) {
+		// 候选套餐是否存在在售状态
+		LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.in(Setmeal::getId, ids).eq(Setmeal::getStatus, 1);
+		int count = setmealService.count(queryWrapper);
+		if (count > 0) {
+			throw new CustomException("存在待售套餐，无法删除");
+		}
+
+		// 在setmeal表中逻辑删除相关套餐
+		LambdaUpdateWrapper<Setmeal> updateWrapper = new LambdaUpdateWrapper<>();
+		updateWrapper.in(Setmeal::getId, ids).set(Setmeal::getIsDeleted, 1);
+		boolean setmealUpdated = update(new Setmeal(), updateWrapper);
+
+		// 在setmeal_dish表中删除对应套餐的菜品
+		LambdaUpdateWrapper<SetmealDish> updateWrapperWithDish = new LambdaUpdateWrapper<>();
+		updateWrapperWithDish.in(SetmealDish::getSetmealId, ids).set(SetmealDish::getIsDeleted, 1);
+		boolean setmealDishUpdated = setmealDishService.update(new SetmealDish(), updateWrapperWithDish);
+
+		return setmealUpdated && setmealDishUpdated;
 	}
 }
 

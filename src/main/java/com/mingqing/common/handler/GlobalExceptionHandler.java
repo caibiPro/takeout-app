@@ -1,6 +1,6 @@
 package com.mingqing.common.handler;
 
-import com.mingqing.common.exception.CustomRelevanceException;
+import com.mingqing.common.exception.CustomException;
 import com.mingqing.common.utils.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,8 +23,8 @@ public class GlobalExceptionHandler {
 		return Result.error("未知错误");
 	}
 
-	@ExceptionHandler(CustomRelevanceException.class)
-	public Result<?> customRelevanceExceptionHandler(CustomRelevanceException ex) {
+	@ExceptionHandler(CustomException.class)
+	public Result<?> customRelevanceExceptionHandler(CustomException ex) {
 		log.error(ex.getMessage());
 		return Result.error(ex.getMessage());
 	}

@@ -39,4 +39,13 @@ public class SetmealController {
 		return Result.success("更改状态成功");
 	}
 
+	@DeleteMapping
+	public Result<?> removeSetmeal(@RequestParam List<Long> ids) {
+		boolean removed = setmealService.removeSetmeal(ids);
+		if (!removed) {
+			return Result.error("删除套餐失败");
+		}
+		return Result.success("删除套餐成功");
+	}
+
 }

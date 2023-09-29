@@ -2,7 +2,7 @@ package com.mingqing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mingqing.common.exception.CustomRelevanceException;
+import com.mingqing.common.exception.CustomException;
 import com.mingqing.entity.Category;
 import com.mingqing.entity.Dish;
 import com.mingqing.entity.Setmeal;
@@ -31,7 +31,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		queryWrapperDish.eq(Dish::getCategoryId, id);
 		int countInDish = dishService.count(queryWrapperDish);
 		if (countInDish > 0) {
-			throw new CustomRelevanceException("当前分类下关联了菜品，不能删除");
+			throw new CustomException("当前分类下关联了菜品，不能删除");
 		}
 		// 判断套餐表中是否关联了待删除套餐分类id
 		LambdaQueryWrapper<Setmeal> queryWrapperSetmeal = new LambdaQueryWrapper<>();
@@ -39,7 +39,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		int countInSetmeal = setmealService.count(queryWrapperSetmeal);
 
 		if (countInSetmeal > 0) {
-			throw new CustomRelevanceException("当前分类下关联了套餐，不能删除");
+			throw new CustomException("当前分类下关联了套餐，不能删除");
 		}
 		return super.removeById(id);
 	}

@@ -14,5 +14,7 @@ public interface SetmealService extends IService<Setmeal> {
 	Page<SetmealDTO> pageWithCategory(int page, int pageSize, String name);
 
 	boolean reverseStatus(int status, List<Long> ids);
+
+	boolean removeSetmeal(List<Long> ids);
 }
 
