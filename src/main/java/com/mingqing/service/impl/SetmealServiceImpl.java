@@ -1,5 +1,6 @@
 package com.mingqing.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mingqing.dto.SetmealDTO;
 import com.mingqing.entity.Setmeal;
@@ -18,6 +19,9 @@ import java.util.stream.Collectors;
 public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> implements SetmealService {
 
 	@Autowired
+	private SetmealMapper setmealMapper;
+
+	@Autowired
 	private SetmealService setmealService;
 
 	@Autowired
@@ -33,6 +37,13 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		setmealDishes.stream().peek(item -> item.setSetmealId(setmealId)).collect(Collectors.toList());
 
 		setmealDishService.saveBatch(setmealDishes);
+	}
+
+	@Override
+	public Page<SetmealDTO> pageWithCategory(int page, int pageSize, String name) {
+		Page<SetmealDTO> pageInfo = new Page<>(page, pageSize);
+		setmealMapper.selectWithCategory(pageInfo, name);
+		return pageInfo;
 	}
 }
 

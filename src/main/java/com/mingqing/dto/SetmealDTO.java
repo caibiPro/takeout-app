@@ -14,4 +14,6 @@ public class SetmealDTO extends Setmeal {
 	@JsonProperty("setmealDishes")
 	private List<SetmealDish> setmealDishList;
 
+	private String categoryName;
+
 }
