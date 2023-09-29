@@ -30,7 +30,7 @@ reggie:
       - /front/**
       - /common/**
       - /swagger-ui.html
-      - /user/code
+      - /user/sendMsg
       - /user/login
   dump:
     dish:

@@ -62,9 +62,17 @@ public class LoginCheckFilter implements Filter {
 
 		//4.判断登录状态，如果已登录，则直接放行
 		if (request.getSession().getAttribute("employee") != null) {
-			Long id = (Long) request.getSession().getAttribute("employee");
-			log.info("用户 {} 已登录", id);
-			BaseContext.setLoginId(id);
+			Long empId = (Long) request.getSession().getAttribute("employee");
+			log.info("用户 {} 已登录", empId);
+			BaseContext.setLoginId(empId);
+			filterChain.doFilter(request, response);
+			return;
+		}
+
+		if (request.getSession().getAttribute("user") != null) {
+			Long userId = (Long) request.getSession().getAttribute("user");
+			log.info("用户 {} 已登录", userId);
+			BaseContext.setLoginId(userId);
 			filterChain.doFilter(request, response);
 			return;
 		}

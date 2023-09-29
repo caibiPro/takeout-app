@@ -37,7 +37,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	@Override
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
-		registry.addResourceHandler("/frontend/**").addResourceLocations("classpath:/frontend/");
+		registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
 	}
 
 	@Override
