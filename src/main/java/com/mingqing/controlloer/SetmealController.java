@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/setmeal")
@@ -27,4 +29,14 @@ public class SetmealController {
 		Page<SetmealDTO> setmealPages = setmealService.pageWithCategory(page, pageSize, name);
 		return Result.success(setmealPages);
 	}
+
+	@PostMapping("/status/{status}")
+	public Result<?> alterSaleStatus(@PathVariable int status, @RequestParam List<Long> ids) {
+		boolean altered = setmealService.reverseStatus(status, ids);
+		if (!altered) {
+			return Result.error("更改状态失败");
+		}
+		return Result.success("更改状态成功");
+	}
+
 }

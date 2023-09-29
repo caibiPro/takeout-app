@@ -74,6 +74,7 @@ public class DishServiceImpl extends CustomBaseServiceImpl<DishMapper, Dish> imp
 	}
 
 	@Override
+	@Transactional
 	public boolean reverseStatus(int status, List<Long> ids) {
 		List<Dish> dishList = new ArrayList<>();
 		for (Long id : ids) {

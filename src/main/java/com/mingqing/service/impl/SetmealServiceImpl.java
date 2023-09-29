@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,19 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		Page<SetmealDTO> pageInfo = new Page<>(page, pageSize);
 		setmealMapper.selectWithCategory(pageInfo, name);
 		return pageInfo;
+	}
+
+	@Override
+	@Transactional
+	public boolean reverseStatus(int status, List<Long> ids) {
+		List<Setmeal> setmeals = new ArrayList<>();
+		for (Long id : ids) {
+			Setmeal setmeal = new Setmeal();
+			setmeal.setStatus(status);
+			setmeal.setId(id);
+			setmeals.add(setmeal);
+		}
+		return updateBatchById(setmeals);
 	}
 }
 
