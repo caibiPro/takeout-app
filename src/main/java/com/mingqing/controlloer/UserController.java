@@ -49,7 +49,7 @@ public class UserController {
 		if (!StringUtils.isEmpty(code) && code.equals(codeInSession)) {
 			// 查询用户是否已注册
 			LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-			queryWrapper.eq(User::getName, phone);
+			queryWrapper.eq(User::getPhone, phone);
 			User user = userService.getOne(queryWrapper);
 			if (user == null) {
 				user = new User();
