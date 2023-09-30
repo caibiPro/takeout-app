@@ -1,0 +1,130 @@
+package com.mingqing.entity;
+
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+@TableName(value = "address_book")
+@Data
+public class AddressBook implements Serializable {
+
+	@TableField(exist = false)
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 主键
+	 */
+	@TableId(value = "id")
+	private Long id;
+
+	/**
+	 * 用户id
+	 */
+	@TableField(value = "user_id")
+	private Long user_id;
+
+	/**
+	 * 收货人
+	 */
+	@TableField(value = "consignee")
+	private String consignee;
+
+	/**
+	 * 性别 0 女 1 男
+	 */
+	@TableField(value = "sex")
+	private Integer sex;
+
+	/**
+	 * 手机号
+	 */
+	@TableField(value = "phone")
+	private String phone;
+
+	/**
+	 * 省级区划编号
+	 */
+	@TableField(value = "province_code")
+	private String province_code;
+
+	/**
+	 * 省级名称
+	 */
+	@TableField(value = "province_name")
+	private String province_name;
+
+	/**
+	 * 市级区划编号
+	 */
+	@TableField(value = "city_code")
+	private String city_code;
+
+	/**
+	 * 市级名称
+	 */
+	@TableField(value = "city_name")
+	private String city_name;
+
+	/**
+	 * 区级区划编号
+	 */
+	@TableField(value = "district_code")
+	private String district_code;
+
+	/**
+	 * 区级名称
+	 */
+	@TableField(value = "district_name")
+	private String district_name;
+
+	/**
+	 * 详细地址
+	 */
+	@TableField(value = "detail")
+	private String detail;
+
+	/**
+	 * 标签
+	 */
+	@TableField(value = "label")
+	private String label;
+
+	/**
+	 * 默认 0 否 1是
+	 */
+	@TableField(value = "is_default")
+	private Integer is_default;
+
+	/**
+	 * 创建时间
+	 */
+	@TableField(value = "create_time", fill = FieldFill.INSERT)
+	private LocalDateTime create_time;
+
+	/**
+	 * 更新时间
+	 */
+	@TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime update_time;
+
+	/**
+	 * 创建人
+	 */
+	@TableField(value = "create_user", fill = FieldFill.INSERT)
+	private Long create_user;
+
+	/**
+	 * 修改人
+	 */
+	@TableField(value = "update_user", fill = FieldFill.INSERT_UPDATE)
+	private Long update_user;
+
+	/**
+	 * 是否删除
+	 */
+	@TableField(value = "is_deleted")
+	@TableLogic
+	private Integer is_deleted;
+}
