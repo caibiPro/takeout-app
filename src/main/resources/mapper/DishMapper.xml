@@ -71,4 +71,22 @@
       AND d.is_deleted = 0
       AND df.is_deleted = 0
   </select>
+  <select id="selectWithFlavors" resultMap="WithFlavors">
+    SELECT
+      d.*,
+      df.id AS flavor_id,
+      df.`name` AS flavor_name,
+      df.`value` AS dish_flavor
+    FROM
+        dish d
+    LEFT JOIN dish_flavor df ON d.id = df.dish_id
+    WHERE
+      d.is_deleted = 0
+      AND df.is_deleted = 0
+      AND d.`status` = 1
+      <if test="categoryId != null">
+        AND category_id = #{categoryId}
+      </if>
+    ORDER BY d.sort, d.update_time DESC;
+  </select>
 </mapper>

@@ -20,5 +20,7 @@ public interface DishService extends CustomBaseService<Dish> {
 	boolean reverseStatus(int status, List<Long> ids);
 
 	boolean removeDishes(List<Long> ids);
+
+	List<DishDTO> listWithFlavors(Dish dish);
 }
 

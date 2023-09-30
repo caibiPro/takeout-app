@@ -102,6 +102,11 @@ public class DishServiceImpl extends CustomBaseServiceImpl<DishMapper, Dish> imp
 //		boolean flavorUpdated = dishFlavorService.realRemove(updateWrapperFlavor);
 		return dishUpdated && flavorUpdated;
 	}
+
+	@Override
+	public List<DishDTO> listWithFlavors(Dish dish) {
+		return dishMapper.selectWithFlavors(dish);
+	}
 }
 
 
