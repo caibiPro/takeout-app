@@ -1,8 +1,10 @@
 package com.mingqing.controlloer;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mingqing.common.utils.Result;
 import com.mingqing.dto.SetmealDTO;
+import com.mingqing.entity.Setmeal;
 import com.mingqing.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +50,14 @@ public class SetmealController {
 		return Result.success("删除套餐成功");
 	}
 
+	@GetMapping("/list")
+	public Result<?> list(Setmeal setmeal) {
+		LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
+		queryWrapper.eq(Setmeal::getStatus, 1);
+		queryWrapper.orderByDesc(Setmeal::getUpdateTime);
+
+		List<Setmeal> setmeals = setmealService.list(queryWrapper);
+		return Result.success(setmeals);
+	}
 }
