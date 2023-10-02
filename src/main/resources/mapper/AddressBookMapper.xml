@@ -6,24 +6,24 @@
 
   <resultMap id="BaseResultMap" type="com.mingqing.entity.AddressBook">
     <id property="id" column="id" jdbcType="BIGINT"/>
-    <result property="user_id" column="user_id" jdbcType="BIGINT"/>
+    <result property="userId" column="user_id" jdbcType="BIGINT"/>
     <result property="consignee" column="consignee" jdbcType="VARCHAR"/>
     <result property="sex" column="sex" jdbcType="TINYINT"/>
     <result property="phone" column="phone" jdbcType="VARCHAR"/>
-    <result property="province_code" column="province_code" jdbcType="VARCHAR"/>
-    <result property="province_name" column="province_name" jdbcType="VARCHAR"/>
-    <result property="city_code" column="city_code" jdbcType="VARCHAR"/>
-    <result property="city_name" column="city_name" jdbcType="VARCHAR"/>
-    <result property="district_code" column="district_code" jdbcType="VARCHAR"/>
-    <result property="district_name" column="district_name" jdbcType="VARCHAR"/>
+    <result property="provinceCode" column="province_code" jdbcType="VARCHAR"/>
+    <result property="provinceName" column="province_name" jdbcType="VARCHAR"/>
+    <result property="cityCode" column="city_code" jdbcType="VARCHAR"/>
+    <result property="cityName" column="city_name" jdbcType="VARCHAR"/>
+    <result property="districtCode" column="district_code" jdbcType="VARCHAR"/>
+    <result property="districtName" column="district_name" jdbcType="VARCHAR"/>
     <result property="detail" column="detail" jdbcType="VARCHAR"/>
     <result property="label" column="label" jdbcType="VARCHAR"/>
-    <result property="is_default" column="is_default" jdbcType="TINYINT"/>
-    <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
-    <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
-    <result property="create_user" column="create_user" jdbcType="BIGINT"/>
-    <result property="update_user" column="update_user" jdbcType="BIGINT"/>
-    <result property="is_deleted" column="is_deleted" jdbcType="INTEGER"/>
+    <result property="isDefault" column="is_default" jdbcType="TINYINT"/>
+    <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+    <result property="updateUser" column="update_user" jdbcType="BIGINT"/>
+    <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
   </resultMap>
 
   <sql id="Base_Column_List">
