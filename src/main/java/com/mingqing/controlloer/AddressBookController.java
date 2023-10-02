@@ -64,4 +64,15 @@ public class AddressBookController {
 		return Result.success(addressBook);
 	}
 
+	@GetMapping("/default")
+	public Result<?> defaultAddress() {
+		Long userId = BaseContext.getLoginId();
+		LambdaQueryWrapper<AddressBook> queryWrapper = new LambdaQueryWrapper<>();
+
+		queryWrapper.eq(userId != null, AddressBook::getUserId, userId);
+		queryWrapper.eq(AddressBook::getIsDefault, 1);
+
+		AddressBook address = addressBookService.getOne(queryWrapper);
+		return Result.success(address);
+	}
 }
