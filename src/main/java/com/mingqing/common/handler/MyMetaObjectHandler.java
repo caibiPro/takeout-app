@@ -16,6 +16,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 		log.info("start insert fill ....");
 		this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
 		this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
+		this.strictInsertFill(metaObject, "orderTime", LocalDateTime.class, LocalDateTime.now());
+		this.strictInsertFill(metaObject, "checkoutTime", LocalDateTime.class, LocalDateTime.now());
 
 		if (BaseContext.getLoginId() != null) {
 			this.strictInsertFill(metaObject, "createUser", Long.class, BaseContext.getLoginId());
@@ -32,6 +34,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 //		metaObject.setValue("updateTime", LocalDateTime.now());
 //		metaObject.setValue("updateUser", BaseContext.getLoginId());
 		this.setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
+		this.setFieldValByName("checkoutTime", LocalDateTime.now(), metaObject);
 		if (BaseContext.getLoginId() != null) {
 			this.setFieldValByName("updateUser", BaseContext.getLoginId(), metaObject);
 		}
