@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MybatisConfig {
 
-	@Bean
-	public MybatisPlusInterceptor mybatisPlusInterceptor() {
-		MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-		mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
-		return mybatisPlusInterceptor;
-	}
+  @Bean
+  public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+    mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+    return mybatisPlusInterceptor;
+  }
 
-	/**
-	 * 自定义SqlInjector，包含自定义的全局方法
-	 */
-	@Bean
-	public CustomSqlInjector customSqlInjector() {
-		return new CustomSqlInjector();
-	}
+  /**
+   * 自定义SqlInjector，包含自定义的全局方法
+   */
+  @Bean
+  public CustomSqlInjector customSqlInjector() {
+    return new CustomSqlInjector();
+  }
 }

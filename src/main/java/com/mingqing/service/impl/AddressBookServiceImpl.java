@@ -7,7 +7,8 @@ import com.mingqing.service.AddressBookService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, AddressBook> implements AddressBookService {
+public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, AddressBook> implements
+    AddressBookService {
 
 }
 

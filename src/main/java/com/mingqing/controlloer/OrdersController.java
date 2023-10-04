@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order")
 public class OrdersController {
 
-	@Autowired
-	private OrdersService ordersService;
+  @Autowired
+  private OrdersService ordersService;
 
-	@PostMapping("/submit")
-	public Result<String> submit(@RequestBody Orders orders) {
-		log.info("orders:{}", orders);
-		ordersService.submit(orders);
-		return Result.success("用户下单成功");
-	}
+  @PostMapping("/submit")
+  public Result<String> submit(@RequestBody Orders orders) {
+    log.info("orders:{}", orders);
+    ordersService.submit(orders);
+    return Result.success("用户下单成功");
+  }
 }

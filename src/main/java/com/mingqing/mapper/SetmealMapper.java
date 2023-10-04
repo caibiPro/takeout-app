@@ -7,7 +7,7 @@ import com.mingqing.entity.Setmeal;
 
 public interface SetmealMapper extends BaseMapper<Setmeal> {
 
-	Page<SetmealDTO> selectWithCategory(Page<SetmealDTO> pageInfo, String name);
+  Page<SetmealDTO> selectWithCategory(Page<SetmealDTO> pageInfo, String name);
 }
 
 

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 public interface CustomBaseService<T> extends IService<T> {
 
-	int deleteByIdWithFill(T entity);
+  int deleteByIdWithFill(T entity);
 
-	boolean realRemove(Wrapper<T> queryWrapper);
+  boolean realRemove(Wrapper<T> queryWrapper);
 }

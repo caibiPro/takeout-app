@@ -5,5 +5,5 @@ import com.mingqing.entity.Orders;
 
 public interface OrdersService extends IService<Orders> {
 
-	void submit(Orders orders);
+  void submit(Orders orders);
 }

@@ -11,102 +11,103 @@ import com.mingqing.injector.base.CustomBaseServiceImpl;
 import com.mingqing.mapper.DishMapper;
 import com.mingqing.service.DishFlavorService;
 import com.mingqing.service.DishService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-public class DishServiceImpl extends CustomBaseServiceImpl<DishMapper, Dish> implements DishService {
+public class DishServiceImpl extends CustomBaseServiceImpl<DishMapper, Dish> implements
+    DishService {
 
-	@Autowired
-	private DishFlavorService dishFlavorService;
+  @Autowired
+  private DishFlavorService dishFlavorService;
 
-	@Autowired
-	private DishMapper dishMapper;
+  @Autowired
+  private DishMapper dishMapper;
 
-	@Override
-	@Transactional
-	public boolean saveWithFlavor(DishDTO dishDTO) {
-		// 菜品数据存储到dish表
-		boolean savedDish = this.save(dishDTO);
-		// 构造DishFlavor对象
-		Long dishId = dishDTO.getId();
-		List<DishFlavor> flavors = dishDTO.getFlavors();
-		flavors = flavors.stream().peek(flavor -> flavor.setDishId(dishId)).collect(Collectors.toList());
-		// flavors批量插入存储到dish_flavor表
-		boolean savedDishFlavor = dishFlavorService.saveBatch(flavors);
+  @Override
+  @Transactional
+  public boolean saveWithFlavor(DishDTO dishDTO) {
+    // 菜品数据存储到dish表
+    boolean savedDish = this.save(dishDTO);
+    // 构造DishFlavor对象
+    Long dishId = dishDTO.getId();
+    List<DishFlavor> flavors = dishDTO.getFlavors();
+    flavors = flavors.stream().peek(flavor -> flavor.setDishId(dishId))
+        .collect(Collectors.toList());
+    // flavors批量插入存储到dish_flavor表
+    boolean savedDishFlavor = dishFlavorService.saveBatch(flavors);
 
-		return savedDish && savedDishFlavor;
-	}
+    return savedDish && savedDishFlavor;
+  }
 
-	@Override
-	public IPage<DishDTO> getDishWithCategory(int page, int pageSize, String name) {
-		Page<DishDTO> pageInfo = new Page<>(page, pageSize);
-		return dishMapper.selectWithCategory(pageInfo, name);
-	}
+  @Override
+  public IPage<DishDTO> getDishWithCategory(int page, int pageSize, String name) {
+    Page<DishDTO> pageInfo = new Page<>(page, pageSize);
+    return dishMapper.selectWithCategory(pageInfo, name);
+  }
 
-	@Override
-	public DishDTO getByIdWithFlavor(Long id) {
-		return dishMapper.selectByIdWithFlavor(id);
-	}
+  @Override
+  public DishDTO getByIdWithFlavor(Long id) {
+    return dishMapper.selectByIdWithFlavor(id);
+  }
 
-	@Override
-	@Transactional
-	public boolean updateWithFlavor(DishDTO dishDTO) {
-		Long dishId = dishDTO.getId();
-		List<DishFlavor> flavors = dishDTO.getFlavors();
-		updateById(dishDTO);
+  @Override
+  @Transactional
+  public boolean updateWithFlavor(DishDTO dishDTO) {
+    Long dishId = dishDTO.getId();
+    List<DishFlavor> flavors = dishDTO.getFlavors();
+    updateById(dishDTO);
 
-		LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.eq(DishFlavor::getDishId, dishDTO.getId());
-		dishFlavorService.remove(queryWrapper);
+    LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(DishFlavor::getDishId, dishDTO.getId());
+    dishFlavorService.remove(queryWrapper);
 
-		flavors = flavors.stream().peek(item -> {
-			item.setDishId(dishId);
-			item.setId(null);
-		}).collect(Collectors.toList());
-		dishFlavorService.saveBatch(flavors);
-		return true;
-	}
+    flavors = flavors.stream().peek(item -> {
+      item.setDishId(dishId);
+      item.setId(null);
+    }).collect(Collectors.toList());
+    dishFlavorService.saveBatch(flavors);
+    return true;
+  }
 
-	@Override
-	@Transactional
-	public boolean reverseStatus(int status, List<Long> ids) {
-		List<Dish> dishList = new ArrayList<>();
-		for (Long id : ids) {
-			Dish dish = new Dish();
-			dish.setId(id);
-			dish.setStatus(status);
-			dishList.add(dish);
-		}
-		return updateBatchById(dishList);
-	}
+  @Override
+  @Transactional
+  public boolean reverseStatus(int status, List<Long> ids) {
+    List<Dish> dishList = new ArrayList<>();
+    for (Long id : ids) {
+      Dish dish = new Dish();
+      dish.setId(id);
+      dish.setStatus(status);
+      dishList.add(dish);
+    }
+    return updateBatchById(dishList);
+  }
 
-	@Override
-	@Transactional
-	public boolean removeDishes(List<Long> ids) {
-		// 在dish表中批量删除
-		LambdaUpdateWrapper<Dish> updateWrapper = new LambdaUpdateWrapper<>();
-		updateWrapper.in(Dish::getId, ids).set(Dish::getIsDeleted, 1);
-		boolean dishUpdated = this.update(new Dish(), updateWrapper);
+  @Override
+  @Transactional
+  public boolean removeDishes(List<Long> ids) {
+    // 在dish表中批量删除
+    LambdaUpdateWrapper<Dish> updateWrapper = new LambdaUpdateWrapper<>();
+    updateWrapper.in(Dish::getId, ids).set(Dish::getIsDeleted, 1);
+    boolean dishUpdated = this.update(new Dish(), updateWrapper);
 
-		// 在dish_flavor表中批量删除
-		LambdaUpdateWrapper<DishFlavor> updateWrapperFlavor = new LambdaUpdateWrapper<>();
-		updateWrapperFlavor.in(DishFlavor::getDishId, ids).set(DishFlavor::getIsDeleted, 1);
-		boolean flavorUpdated = dishFlavorService.update(new DishFlavor(), updateWrapperFlavor);
+    // 在dish_flavor表中批量删除
+    LambdaUpdateWrapper<DishFlavor> updateWrapperFlavor = new LambdaUpdateWrapper<>();
+    updateWrapperFlavor.in(DishFlavor::getDishId, ids).set(DishFlavor::getIsDeleted, 1);
+    boolean flavorUpdated = dishFlavorService.update(new DishFlavor(), updateWrapperFlavor);
 //		updateWrapperFlavor.in(DishFlavor::getDishId, ids);
 //		boolean flavorUpdated = dishFlavorService.realRemove(updateWrapperFlavor);
-		return dishUpdated && flavorUpdated;
-	}
+    return dishUpdated && flavorUpdated;
+  }
 
-	@Override
-	public List<DishDTO> listWithFlavors(Dish dish) {
-		return dishMapper.selectWithFlavors(dish);
-	}
+  @Override
+  public List<DishDTO> listWithFlavors(Dish dish) {
+    return dishMapper.selectWithFlavors(dish);
+  }
 }
 
 

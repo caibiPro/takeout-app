@@ -7,7 +7,8 @@ import com.mingqing.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, ShoppingCart> implements ShoppingCartService {
+public class ShoppingCartServiceImpl extends
+    ServiceImpl<ShoppingCartMapper, ShoppingCart> implements ShoppingCartService {
 
 }
 

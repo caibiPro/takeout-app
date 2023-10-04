@@ -10,39 +10,39 @@ import com.mingqing.mapper.CategoryMapper;
 import com.mingqing.service.CategoryService;
 import com.mingqing.service.DishService;
 import com.mingqing.service.SetmealService;
+import java.io.Serializable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
-
 @Service
-public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements
+    CategoryService {
 
-	@Autowired
-	private DishService dishService;
+  @Autowired
+  private DishService dishService;
 
-	@Autowired
-	private SetmealService setmealService;
+  @Autowired
+  private SetmealService setmealService;
 
-	@Override
-	public boolean removeById(Serializable id) {
-		// 判断菜品表中是否关联了待删除套餐分类id
-		LambdaQueryWrapper<Dish> queryWrapperDish = new LambdaQueryWrapper<>();
-		queryWrapperDish.eq(Dish::getCategoryId, id);
-		int countInDish = dishService.count(queryWrapperDish);
-		if (countInDish > 0) {
-			throw new CustomException("当前分类下关联了菜品，不能删除");
-		}
-		// 判断套餐表中是否关联了待删除套餐分类id
-		LambdaQueryWrapper<Setmeal> queryWrapperSetmeal = new LambdaQueryWrapper<>();
-		queryWrapperSetmeal.eq(Setmeal::getCategoryId, id);
-		int countInSetmeal = setmealService.count(queryWrapperSetmeal);
+  @Override
+  public boolean removeById(Serializable id) {
+    // 判断菜品表中是否关联了待删除套餐分类id
+    LambdaQueryWrapper<Dish> queryWrapperDish = new LambdaQueryWrapper<>();
+    queryWrapperDish.eq(Dish::getCategoryId, id);
+    int countInDish = dishService.count(queryWrapperDish);
+    if (countInDish > 0) {
+      throw new CustomException("当前分类下关联了菜品，不能删除");
+    }
+    // 判断套餐表中是否关联了待删除套餐分类id
+    LambdaQueryWrapper<Setmeal> queryWrapperSetmeal = new LambdaQueryWrapper<>();
+    queryWrapperSetmeal.eq(Setmeal::getCategoryId, id);
+    int countInSetmeal = setmealService.count(queryWrapperSetmeal);
 
-		if (countInSetmeal > 0) {
-			throw new CustomException("当前分类下关联了套餐，不能删除");
-		}
-		return super.removeById(id);
-	}
+    if (countInSetmeal > 0) {
+      throw new CustomException("当前分类下关联了套餐，不能删除");
+    }
+    return super.removeById(id);
+  }
 }
 
 
