@@ -8,6 +8,7 @@ import com.mingqing.service.DishService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +27,18 @@ public class DishController {
   @Autowired
   private DishService dishService;
 
+  @Autowired
+  private RedisTemplate redisTemplate;
+
   @PostMapping
   public Result<?> save(@RequestBody DishDTO dishDTO) {
     boolean saved = dishService.saveWithFlavor(dishDTO);
     if (!saved) {
       return Result.error("新增菜品失败");
     }
+    String key = "dish_" + dishDTO.getCategoryId() + "_" + dishDTO.getStatus();
+    redisTemplate.delete(key);
+    
     return Result.success("新增菜品成功");
   }
 
@@ -56,6 +63,10 @@ public class DishController {
     if (!updated) {
       return Result.error("修改菜品失败");
     }
+
+    String key = "dish_" + dishDTO.getCategoryId() + "_" + dishDTO.getStatus();
+    redisTemplate.delete(key);
+
     return Result.success("修改菜品成功");
   }
 

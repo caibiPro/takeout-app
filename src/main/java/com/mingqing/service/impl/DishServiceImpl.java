@@ -13,8 +13,10 @@ import com.mingqing.service.DishFlavorService;
 import com.mingqing.service.DishService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,9 @@ public class DishServiceImpl extends CustomBaseServiceImpl<DishMapper, Dish> imp
 
   @Autowired
   private DishMapper dishMapper;
+
+  @Autowired
+  private RedisTemplate redisTemplate;
 
   @Override
   @Transactional
@@ -106,7 +111,16 @@ public class DishServiceImpl extends CustomBaseServiceImpl<DishMapper, Dish> imp
 
   @Override
   public List<DishDTO> listWithFlavors(Dish dish) {
-    return dishMapper.selectWithFlavors(dish);
+    List<DishDTO> list = null;
+    // 按照菜品类别构造key
+    String key = "dish_" + dish.getCategoryId() + "_" + dish.getStatus();
+    if (redisTemplate.hasKey(key)) {
+      list = (List<DishDTO>) redisTemplate.opsForValue().get(key);
+    } else {
+      list = dishMapper.selectWithFlavors(dish);
+      redisTemplate.opsForValue().set(key, list, 10, TimeUnit.MINUTES);
+    }
+    return list;
   }
 }
 
