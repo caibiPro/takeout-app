@@ -1,11 +1,12 @@
 package com.mingqing.common.utils;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
 
 @Data
-public class Result<T> {
+public class Result<T> implements Serializable {
 
   private Integer code;
 

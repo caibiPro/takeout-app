@@ -15,6 +15,9 @@ spring:
       url: jdbc:mysql://114.115.162.41:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: caibi
       password: tmq@19950529
+  cache:
+    redis:
+      time-to-live: 1800000
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
