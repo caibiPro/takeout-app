@@ -10,6 +10,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,14 +18,24 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Slf4j
 @Configuration
+@EnableSwagger2
+@EnableKnife4j
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
   public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
@@ -36,6 +47,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
    */
   @Override
   protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+    registry.addResourceHandler("/webjars/**")
+        .addResourceLocations("classpath:/META-INF/resources/webjars/");
     registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
     registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
   }
@@ -73,5 +87,15 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     converter.setObjectMapper(objectMapper);
     converters.add(0, converter);
 
+  }
+
+  @Bean
+  public Docket createRestApi() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .apiInfo(new ApiInfoBuilder().title("Reggie-take-out Api").version("1.0").build())
+        .select()
+        .apis(RequestHandlerSelectors.basePackage("com.mingqing.controller"))
+        .paths(PathSelectors.any())
+        .build();
   }
 }

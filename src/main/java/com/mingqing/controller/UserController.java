@@ -1,4 +1,4 @@
-package com.mingqing.controlloer;
+package com.mingqing.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

@@ -37,9 +37,13 @@ reggie:
       - /backend/**
       - /front/**
       - /common/**
-      - /swagger-ui.html
       - /user/sendMsg
       - /user/login
+      - /doc.html
+      - /webjars/**
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /v2/api-docs
   dump:
     dish:
       base-path: /Users/mingqing/Documents/study/project/reggie_take_out/src/main/resources/dump/dish/

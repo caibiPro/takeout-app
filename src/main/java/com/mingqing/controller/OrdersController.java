@@ -1,4 +1,4 @@
-package com.mingqing.controlloer;
+package com.mingqing.controller;
 
 import com.mingqing.common.utils.Result;
 import com.mingqing.entity.Orders;

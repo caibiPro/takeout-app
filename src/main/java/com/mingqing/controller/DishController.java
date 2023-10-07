@@ -1,4 +1,4 @@
-package com.mingqing.controlloer;
+package com.mingqing.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mingqing.common.utils.Result;
@@ -38,7 +38,7 @@ public class DishController {
     }
     String key = "dish_" + dishDTO.getCategoryId() + "_" + dishDTO.getStatus();
     redisTemplate.delete(key);
-    
+
     return Result.success("新增菜品成功");
   }
 

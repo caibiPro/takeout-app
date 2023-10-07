@@ -1,4 +1,4 @@
-package com.mingqing.controlloer;
+package com.mingqing.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -6,6 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mingqing.common.utils.Result;
 import com.mingqing.entity.Employee;
 import com.mingqing.service.EmployeeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/employee")
+@Api(tags = "员工接口")
 public class EmployeeController {
 
   @Autowired
   private EmployeeService employeeService;
 
   @PostMapping("/login")
+  @ApiOperation("登陆")
   public Result<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
     String passwordEncrypt = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes());
 
@@ -53,6 +59,7 @@ public class EmployeeController {
   }
 
   @PostMapping("/logout")
+  @ApiOperation("退出登陆")
   public Result<String> logout(HttpServletRequest request) {
     request.getSession().removeAttribute("employee");
     log.info("退出登陆成功");
@@ -72,6 +79,12 @@ public class EmployeeController {
   }
 
   @GetMapping("page")
+  @ApiOperation("分页查询")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "page", value = "当前页", required = true, dataType = "int"),
+      @ApiImplicitParam(name = "pageSize", value = "每页条数", required = true, dataType = "int"),
+      @ApiImplicitParam(name = "name", value = "用户名", required = false, dataType = "String")
+  })
   public Result<?> page(int page, int pageSize, String name) {
     log.info("page={},pageSize={},name={}", page, pageSize, name);
 
